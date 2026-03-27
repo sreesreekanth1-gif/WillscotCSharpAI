@@ -68,6 +68,12 @@ namespace Framework.Tests
 
             TestContext.Progress.WriteLine($"[Browser] Running on: {browserName}");
 
+            Allure.Net.Commons.AllureLifecycle.Instance.UpdateTestCase(tc =>
+            {
+                tc.parameters.Add(new Allure.Net.Commons.Parameter { name = "Browser", value = browserName });
+                tc.parameters.Add(new Allure.Net.Commons.Parameter { name = "Browser Version", value = Browser!.Version });
+            });
+
             BrowserContext = await Browser.NewContextAsync(new BrowserNewContextOptions
             {
                 UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
