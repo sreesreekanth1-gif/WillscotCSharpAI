@@ -1,0 +1,2 @@
+This is a placeholder for LoginData.xlsx.
+Please add your Excel test data at TestData/LoginData.xlsx with columns such as Username, Password, ExpectedResult.
