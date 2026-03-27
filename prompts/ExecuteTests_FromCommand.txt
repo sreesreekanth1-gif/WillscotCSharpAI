@@ -1,0 +1,3 @@
+Use below command to execute tests with tests DryRun,Smoke,Regression
+dotnet test WillscotCSharpAI.sln --filter Category=DryRun,Smoke,Regression
+

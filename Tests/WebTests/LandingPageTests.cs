@@ -1,7 +1,7 @@
-using Allure.Net.Commons;
 using Framework.Configuration;
 using Framework.Pages;
 using NUnit.Framework;
+using System;
 using System.Threading.Tasks;
 
 namespace Framework.Tests.WebTests
@@ -10,33 +10,63 @@ namespace Framework.Tests.WebTests
     public class LandingPageTests : BaseTest
     {
         [Test]
+        [Category("Smoke")]
+        [Category("Regression")]
         public async Task VerifyPageTitle()
         {
-            var landingPage = new LandingPage(Page);
-            await landingPage.NavigateToAsync(ConfigReader.BaseUrl);
-            var title = await landingPage.GetPageTitleAsync();
-            AllureApi.Step("Assert page title contains 'WillScot'", () =>
-                Assert.That(title, Does.Contain("WillScot")));
+            try
+            {
+                var landingPage = new LandingPage(Page);
+                await landingPage.NavigateToAsync(ConfigReader.BaseUrl);
+                var title = await landingPage.GetPageTitleAsync();
+                await StepWithScreenshotAsync("Assert page title contains 'WillScot'", () =>
+                    Assert.That(title, Does.Contain("WillScot")));
+            }
+            catch (Exception ex)
+            {
+                LogExceptionToAllure(ex);
+                throw;
+            }
         }
 
         [Test]
+        [Category("Smoke")]
+        [Category("Regression")]
         public async Task VerifyLogoExists()
         {
-            var landingPage = new LandingPage(Page);
-            await landingPage.NavigateToAsync(ConfigReader.BaseUrl);
-            var isVisible = await landingPage.IsLogoDisplayedAsync();
-            AllureApi.Step("Assert logo is visible", () =>
-                Assert.That(isVisible, Is.True));
+            try
+            {
+                var landingPage = new LandingPage(Page);
+                await landingPage.NavigateToAsync(ConfigReader.BaseUrl);
+                var isVisible = await landingPage.IsLogoDisplayedAsync();
+                await StepWithScreenshotAsync("Assert logo is visible", () =>
+                    Assert.That(isVisible, Is.True));
+            }
+            catch (Exception ex)
+            {
+                LogExceptionToAllure(ex);
+                throw;
+            }
         }
 
         [Test]
+        [Category("Smoke")]
+        [Category("Regression")]
         public async Task VerifyNavigationMenu()
         {
-            var landingPage = new LandingPage(Page);
-            await landingPage.NavigateToAsync(ConfigReader.BaseUrl);
-            var count = await landingPage.GetNavigationCountAsync();
-            AllureApi.Step($"Assert navigation has at least 3 items (found {count})", () =>
-                Assert.That(count, Is.GreaterThanOrEqualTo(3)));
+            try
+            {
+                var landingPage = new LandingPage(Page);
+                await landingPage.NavigateToAsync(ConfigReader.BaseUrl);
+                var count = await landingPage.GetNavigationCountAsync();
+                await StepWithScreenshotAsync($"Assert navigation has at least 3 items (found {count})", () =>
+                    Assert.That(count, Is.GreaterThanOrEqualTo(3)));
+            }
+            catch (Exception ex)
+            {
+                LogExceptionToAllure(ex);
+                throw;
+            }
         }
     }
 }

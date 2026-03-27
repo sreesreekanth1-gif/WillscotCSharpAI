@@ -2,9 +2,20 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      browser:
+        description: 'Browser to run tests on'
+        required: false
+        default: 'chrome'
+        type: choice
+        options:
+          - chrome
+          - firefox
+          - edge
 
 jobs:
   test:
@@ -18,19 +29,36 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: Install Allure CLI
+        run: npm install -g allure-commandline
+
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore WillscotCSharpAI.sln
 
       - name: Build
-        run: dotnet build --no-restore
+        run: dotnet build WillscotCSharpAI.sln --no-restore
 
       - name: Install Playwright browsers
         run: pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
 
-      - name: Run tests
-        run: dotnet test --no-build --logger:trx
+      - name: Create Reports directory
+        run: New-Item -ItemType Directory -Force -Path Reports
 
-      - name: Generate Allure report
-        run: |
-          allure generate Reports --clean -o Reports/generated
-          allure open Reports/generated
+      - name: Run tests
+        env:
+          BROWSER: ${{ github.event.inputs.browser || 'chrome' }}
+        run: dotnet test WillscotCSharpAI.sln --no-build --logger "trx;LogFileName=TestResults.trx" --results-directory TestResults
+
+      - name: Upload Allure Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: Reports/
+
+      - name: Upload Test Results (TRX)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-trx
+          path: TestResults/

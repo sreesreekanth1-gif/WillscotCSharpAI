@@ -7,6 +7,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using System;
 using System.Diagnostics;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Framework.Tests
@@ -109,6 +110,29 @@ namespace Framework.Tests
                 await Browser.CloseAsync();
 
             PlaywrightInstance?.Dispose();
+        }
+
+        protected async Task StepWithScreenshotAsync(string stepName, Action assertion)
+        {
+            await Allure.Net.Commons.AllureApi.Step(stepName, async () =>
+            {
+                if (Page != null)
+                {
+                    var bytes = await Page.ScreenshotAsync();
+                    Allure.Net.Commons.AllureApi.AddAttachment("Screenshot", "image/png", bytes, ".png");
+                }
+                assertion();
+            });
+        }
+
+        protected static void LogExceptionToAllure(Exception ex)
+        {
+            var details = $"Type:    {ex.GetType().FullName}\nMessage: {ex.Message}\n\nStack Trace:\n{ex.StackTrace}";
+            Allure.Net.Commons.AllureApi.AddAttachment(
+                "Error Details",
+                "text/plain",
+                Encoding.UTF8.GetBytes(details),
+                ".txt");
         }
 
         [OneTimeTearDown]
