@@ -1,4 +1,4 @@
-$file = 'D:\OneDrive - OTSI\AI_Learning\WillscotCSharpAI\Reports\index.html'
+$file = "$PSScriptRoot\Reports\index.html"
 $content = [System.IO.File]::ReadAllText($file)
 
 Write-Host "File size: $($content.Length) chars"

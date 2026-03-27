@@ -26,7 +26,7 @@ namespace Framework.Tests.WebTests
             await landingPage.NavigateToAsync(ConfigReader.BaseUrl);
             var isVisible = await landingPage.IsLogoDisplayedAsync();
             AllureApi.Step("Assert logo is visible", () =>
-                Assert.IsTrue(isVisible));
+                Assert.That(isVisible, Is.True));
         }
 
         [Test]

@@ -38,7 +38,7 @@ $banner = @"
 <style>
   #report-custom-title {
     position: fixed; top: 0; left: 0; right: 0; z-index: 99999;
-    background: #d33d37; color: #fff;
+    background: #37d351; color: #fff;
     font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;
     padding: 8px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.3);
   }

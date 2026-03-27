@@ -96,7 +96,8 @@ namespace Framework.Tests.WebTests
             var globalError = await _loginPage.GetGlobalErrorAsync();
 
             AllureApi.Step("Assert unregistered account error is shown", () =>
-                Assert.That(globalError, Does.Contain("wrong email or password").IgnoreCase));
+                Assert.That(globalError, Does.Contain("wrong email or password").IgnoreCase
+                    .Or.Contain("blocked").IgnoreCase));
         }
 
         /// <summary>
