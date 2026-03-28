@@ -1,0 +1,35 @@
+# .NET build outputs
+bin/
+obj/
+
+# Test results
+TestResults/
+
+# Reports (generated)
+Reports/
+allure-results/
+allure-report/
+
+# User-specific files
+*.user
+*.suo
+.vs/
+.vscode/
+
+# NuGet
+*.nupkg
+packages/
+
+# Playwright
+.playwright/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment files (may contain secrets)
+.env
+.env.local
