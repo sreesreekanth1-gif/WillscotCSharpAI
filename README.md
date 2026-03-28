@@ -1,7 +1,7 @@
 # Playwright + NUnit Test Automation Framework (WillScot)
 
 ## Overview
-C# .NET 6 automation framework using Playwright with NUnit, Allure reporting, Excel data, self-healing locators, and notifications.
+C# .NET latest automation framework using Playwright with NUnit, Allure reporting, Excel data, self-healing locators, and notifications.
 
 ## Prerequisites
 - .NET 6 SDK or later
